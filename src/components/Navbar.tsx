@@ -12,9 +12,10 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { useState } from 'react';
+import logo from '@/assets/logo.png';
 
 export function Navbar() {
-  const { user, profile, signOut } = useAuth();
+  const { user, profile, isAdmin, signOut } = useAuth();
   const { data: wallet } = useWallet();
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -23,17 +24,18 @@ export function Navbar() {
     { href: '/', label: 'Lelang', icon: Gavel },
     ...(user ? [{ href: '/wallet', label: 'Dompet', icon: Coins }] : []),
     ...(user ? [{ href: '/transactions', label: 'Transaksi', icon: LayoutDashboard }] : []),
-    ...(profile?.is_admin ? [{ href: '/admin', label: 'Admin', icon: Shield }] : []),
+    ...(isAdmin ? [{ href: '/admin', label: 'Admin', icon: Shield }] : []),
   ];
 
   return (
     <nav className="sticky top-0 z-50 border-b bg-card/80 backdrop-blur-md">
       <div className="container flex h-16 items-center justify-between">
-        <Link to="/" className="flex items-center gap-2">
-          <div className="gradient-primary flex h-9 w-9 items-center justify-center rounded-lg">
-            <Gavel className="h-5 w-5 text-primary-foreground" />
+        <Link to="/" className="flex items-center gap-2.5">
+          <img src={logo} alt="Lelang-GO logo by Gibikey Studio" className="h-10 w-10 object-contain" />
+          <div className="flex flex-col leading-tight">
+            <span className="font-display text-lg font-bold text-foreground">Lelang-GO</span>
+            <span className="text-[10px] uppercase tracking-wider text-muted-foreground">by Gibikey Studio</span>
           </div>
-          <span className="font-display text-lg font-bold text-foreground">E-Lelang Gibikey</span>
         </Link>
 
         {/* Desktop Nav */}

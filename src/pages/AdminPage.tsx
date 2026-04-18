@@ -16,11 +16,10 @@ import { Shield, Plus, CheckCircle, XCircle, Clock, Eye } from 'lucide-react';
 import { format } from 'date-fns';
 
 export default function AdminPage() {
-  const { user, profile, loading } = useAuth();
-  const queryClient = useQueryClient();
+  const { user, isAdmin, loading } = useAuth();
 
   if (loading) return null;
-  if (!user || !profile?.is_admin) return <Navigate to="/" replace />;
+  if (!user || !isAdmin) return <Navigate to="/" replace />;
 
   return (
     <div className="container max-w-5xl space-y-6 py-8">

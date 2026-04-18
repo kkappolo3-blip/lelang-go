@@ -12,14 +12,14 @@ export default function Index() {
         <div className="container">
           <div className="mx-auto max-w-2xl">
             <h1 className="font-display text-3xl font-bold text-primary-foreground md:text-5xl">
-              Marketplace Lelang
+              Lelang-GO
               <br />
               <span className="bg-gradient-to-r from-teal-300 to-cyan-300 bg-clip-text text-transparent">
-                Digital Terpercaya
+                Marketplace Lelang Digital
               </span>
             </h1>
             <p className="mt-4 text-primary-foreground/70">
-              Dapatkan software & lisensi premium dengan harga terbaik melalui sistem lelang yang aman dan transparan.
+              Dapatkan software & lisensi premium dengan harga terbaik melalui sistem lelang yang aman, transparan, dan dijamin garansi escrow 72 jam. Powered by <span className="font-semibold">Gibikey Studio</span>.
             </p>
           </div>
 

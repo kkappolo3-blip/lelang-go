@@ -6,7 +6,8 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
-import { Gavel, Mail, Lock, UserPlus } from 'lucide-react';
+import { Mail, Lock, UserPlus } from 'lucide-react';
+import logo from '@/assets/logo.png';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '@/lib/auth-context';
 
@@ -49,11 +50,9 @@ export default function AuthPage() {
     <div className="flex min-h-[80vh] items-center justify-center px-4">
       <Card className="w-full max-w-md border bg-card card-elevated">
         <CardHeader className="text-center">
-          <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl gradient-primary">
-            <Gavel className="h-7 w-7 text-primary-foreground" />
-          </div>
-          <CardTitle className="font-display text-2xl">E-Lelang Gibikey</CardTitle>
-          <CardDescription>Marketplace Lelang Digital Terpercaya</CardDescription>
+          <img src={logo} alt="Lelang-GO logo" className="mx-auto mb-3 h-16 w-16 object-contain" />
+          <CardTitle className="font-display text-2xl">Lelang-GO</CardTitle>
+          <CardDescription>Marketplace Lelang Digital · Gibikey Studio</CardDescription>
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="login">
