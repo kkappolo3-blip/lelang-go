@@ -27,6 +27,7 @@ export function AuctionCard({ auction }: AuctionCardProps) {
   const { user } = useAuth();
   const navigate = useNavigate();
   const isActive = auction.status === 'active';
+  const isComingSoon = auction.status === 'coming_soon';
   const price = auction.current_price || auction.start_price;
 
   const handleBid = () => {
