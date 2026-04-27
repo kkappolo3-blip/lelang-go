@@ -258,11 +258,19 @@ function AdminTransactions() {
   const { data: transactions } = useQuery({
     queryKey: ['admin-transactions'],
     queryFn: async () => {
-      const { data } = await supabase
+      const { data: txs, error } = await supabase
         .from('transactions')
-        .select('*, auctions(title), profiles!transactions_winner_id_fkey(display_name)')
+        .select('*, auctions(title)')
         .order('created_at', { ascending: false });
-      return data ?? [];
+      if (error) { return []; }
+      if (!txs || txs.length === 0) return [];
+      const userIds = [...new Set(txs.map((t: any) => t.winner_id))];
+      const { data: profs } = await supabase
+        .from('profiles')
+        .select('user_id, display_name')
+        .in('user_id', userIds);
+      const map = new Map((profs ?? []).map((p: any) => [p.user_id, p.display_name]));
+      return txs.map((t: any) => ({ ...t, profiles: { display_name: map.get(t.winner_id) ?? 'Unknown' } }));
     },
   });
 
