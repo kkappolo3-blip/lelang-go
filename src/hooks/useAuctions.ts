@@ -23,12 +23,19 @@ export function useAuctionBids(auctionId: string) {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('bids')
-        .select('*, profiles!bids_user_id_fkey(display_name)')
+        .select('*')
         .eq('auction_id', auctionId)
         .order('amount', { ascending: false })
         .limit(10);
       if (error) throw error;
-      return data ?? [];
+      if (!data || data.length === 0) return [];
+      const userIds = [...new Set(data.map((b: any) => b.user_id))];
+      const { data: profs } = await supabase
+        .from('profiles')
+        .select('user_id, display_name')
+        .in('user_id', userIds);
+      const map = new Map((profs ?? []).map((p: any) => [p.user_id, p.display_name]));
+      return data.map((b: any) => ({ ...b, profiles: { display_name: map.get(b.user_id) ?? 'Unknown' } }));
     },
     refetchInterval: 3000,
   });
