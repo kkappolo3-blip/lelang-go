@@ -1,0 +1,1 @@
+ALTER TYPE auction_status ADD VALUE IF NOT EXISTS 'coming_soon';
