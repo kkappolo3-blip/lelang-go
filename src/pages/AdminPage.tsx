@@ -15,6 +15,12 @@ import { toast } from 'sonner';
 import { Shield, Plus, CheckCircle, XCircle, Clock, Eye } from 'lucide-react';
 import { format } from 'date-fns';
 
+const getProofPath = (proofUrl?: string | null) => {
+  if (!proofUrl) return null;
+  const marker = '/storage/v1/object/public/proofs/';
+  return proofUrl.includes(marker) ? proofUrl.split(marker)[1] : proofUrl;
+};
+
 export default function AdminPage() {
   const { user, isAdmin, loading } = useAuth();
 
@@ -177,7 +183,13 @@ function AdminTopUps() {
         .select('user_id, display_name')
         .in('user_id', userIds);
       const map = new Map((profs ?? []).map((p: any) => [p.user_id, p.display_name]));
-      return tus.map((t: any) => ({ ...t, profiles: { display_name: map.get(t.user_id) ?? 'Unknown' } }));
+      const withProfiles = tus.map((t: any) => ({ ...t, profiles: { display_name: map.get(t.user_id) ?? 'Unknown' } }));
+      return Promise.all(withProfiles.map(async (t: any) => {
+        const path = getProofPath(t.proof_url);
+        if (!path) return t;
+        const { data } = await supabase.storage.from('proofs').createSignedUrl(path, 60 * 10);
+        return { ...t, proof_url: data?.signedUrl ?? t.proof_url };
+      }));
     },
   });
 
