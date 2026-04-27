@@ -111,14 +111,23 @@ function AdminAuctions() {
       <div className="space-y-3">
         {auctions?.map((a: any) => (
           <Card key={a.id}>
-            <CardContent className="flex items-center justify-between p-4">
-              <div>
-                <p className="font-display font-semibold text-card-foreground">{a.title}</p>
+            <CardContent className="flex items-center justify-between gap-3 p-4">
+              <div className="min-w-0 flex-1">
+                <p className="font-display font-semibold text-card-foreground truncate">{a.title}</p>
                 <p className="text-xs text-muted-foreground">
                   Harga: {a.current_price || a.start_price} Koin · Berakhir: {format(new Date(a.ends_at), 'dd MMM yyyy HH:mm')}
                 </p>
               </div>
-              <Badge variant={a.status === 'active' ? 'default' : 'secondary'}>{a.status}</Badge>
+              <div className="flex items-center gap-2 shrink-0">
+                <Badge variant={a.status === 'active' ? 'default' : a.status === 'coming_soon' ? 'outline' : 'secondary'}>
+                  {a.status === 'coming_soon' ? 'Akan Datang' : a.status}
+                </Badge>
+                {a.status === 'coming_soon' && (
+                  <Button size="sm" onClick={() => handleStart(a.id)} className="gradient-primary text-primary-foreground">
+                    <Clock className="mr-1 h-3 w-3" /> Mulai
+                  </Button>
+                )}
+              </div>
             </CardContent>
           </Card>
         ))}
