@@ -50,7 +50,7 @@ export function AuctionCard({ auction }: AuctionCardProps) {
             variant={isActive ? 'default' : 'secondary'}
             className={isActive ? 'absolute right-3 top-3 gradient-primary border-0 text-primary-foreground' : 'absolute right-3 top-3'}
           >
-            {isActive ? 'LIVE' : 'Selesai'}
+            {isActive ? 'LIVE' : isComingSoon ? 'Akan Datang' : 'Selesai'}
           </Badge>
         </div>
 
