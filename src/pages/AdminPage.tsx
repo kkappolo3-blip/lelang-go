@@ -77,18 +77,29 @@ function AdminAuctions() {
       ends_at: new Date(form.ends_at).toISOString(),
       license_key: form.license_key || null,
       license_url: form.license_url || null,
-      status: 'active' as any,
+      status: 'coming_soon' as any,
       current_price: 0,
     });
     if (error) toast.error(error.message);
     else {
-      toast.success('Lelang dibuat!');
+      toast.success('Lelang dibuat dengan status "Akan Datang"!');
       queryClient.invalidateQueries({ queryKey: ['admin-auctions'] });
       queryClient.invalidateQueries({ queryKey: ['auctions'] });
       setCreateOpen(false);
       setForm({ title: '', description: '', image_url: '', start_price: 1, bid_increment: 1, ends_at: '', license_key: '', license_url: '' });
     }
     setSubmitting(false);
+  };
+
+  const handleStart = async (id: string) => {
+    const { error } = await supabase
+      .from('auctions')
+      .update({ status: 'active' as any, starts_at: new Date().toISOString() })
+      .eq('id', id);
+    if (error) { toast.error(error.message); return; }
+    toast.success('Lelang dimulai!');
+    queryClient.invalidateQueries({ queryKey: ['admin-auctions'] });
+    queryClient.invalidateQueries({ queryKey: ['auctions'] });
   };
 
   return (
