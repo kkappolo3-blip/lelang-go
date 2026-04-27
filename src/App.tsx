@@ -10,6 +10,7 @@ import AuthPage from "./pages/AuthPage";
 import WalletPage from "./pages/WalletPage";
 import TransactionsPage from "./pages/TransactionsPage";
 import AdminPage from "./pages/AdminPage";
+import ChangePasswordPage from "./pages/ChangePasswordPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ const App = () => (
             <Route path="/wallet" element={<WalletPage />} />
             <Route path="/transactions" element={<TransactionsPage />} />
             <Route path="/admin" element={<AdminPage />} />
+            <Route path="/ganti-password" element={<ChangePasswordPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>
