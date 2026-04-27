@@ -72,8 +72,12 @@ export function AuctionCard({ auction }: AuctionCardProps) {
               </div>
             </div>
             <div className="text-right">
-              <p className="text-xs text-muted-foreground">Sisa waktu</p>
-              <CountdownTimer endsAt={auction.ends_at} className="text-sm" />
+              <p className="text-xs text-muted-foreground">{isComingSoon ? 'Status' : 'Sisa waktu'}</p>
+              {isComingSoon ? (
+                <span className="text-sm font-medium text-muted-foreground">Belum dibuka</span>
+              ) : (
+                <CountdownTimer endsAt={auction.ends_at} className="text-sm" />
+              )}
             </div>
           </div>
         </CardContent>
@@ -85,7 +89,7 @@ export function AuctionCard({ auction }: AuctionCardProps) {
             className="w-full gradient-primary text-primary-foreground font-semibold"
           >
             <Gavel className="mr-2 h-4 w-4" />
-            {isActive ? 'Bid Sekarang' : 'Lelang Berakhir'}
+            {isActive ? 'Bid Sekarang' : isComingSoon ? 'Akan Datang' : 'Lelang Berakhir'}
           </Button>
         </CardFooter>
       </Card>
