@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '@/lib/auth-context';
 import { useWallet } from '@/hooks/useWallet';
-import { Coins, Gavel, Menu, User, LogOut, Shield, LayoutDashboard } from 'lucide-react';
+import { Coins, Gavel, Menu, User, LogOut, Shield, LayoutDashboard, KeyRound } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -77,6 +77,11 @@ export function Navbar() {
               <DropdownMenuContent align="end">
                 <div className="px-2 py-1.5 text-sm font-medium">{profile?.display_name || user.email}</div>
                 <DropdownMenuSeparator />
+                <Link to="/ganti-password">
+                  <DropdownMenuItem>
+                    <KeyRound className="mr-2 h-4 w-4" /> Ganti Password
+                  </DropdownMenuItem>
+                </Link>
                 <DropdownMenuItem onClick={signOut} className="text-destructive">
                   <LogOut className="mr-2 h-4 w-4" /> Keluar
                 </DropdownMenuItem>
