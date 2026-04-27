@@ -165,11 +165,19 @@ function AdminTopUps() {
   const { data: topUps } = useQuery({
     queryKey: ['admin-topups'],
     queryFn: async () => {
-      const { data } = await supabase
+      const { data: tus, error } = await supabase
         .from('top_up_requests')
-        .select('*, profiles!top_up_requests_user_id_fkey(display_name)')
+        .select('*')
         .order('created_at', { ascending: false });
-      return data ?? [];
+      if (error) { toast.error(error.message); return []; }
+      if (!tus || tus.length === 0) return [];
+      const userIds = [...new Set(tus.map((t: any) => t.user_id))];
+      const { data: profs } = await supabase
+        .from('profiles')
+        .select('user_id, display_name')
+        .in('user_id', userIds);
+      const map = new Map((profs ?? []).map((p: any) => [p.user_id, p.display_name]));
+      return tus.map((t: any) => ({ ...t, profiles: { display_name: map.get(t.user_id) ?? 'Unknown' } }));
     },
   });
 
