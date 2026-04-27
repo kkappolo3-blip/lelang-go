@@ -8,7 +8,7 @@ export function useAuctions() {
       const { data, error } = await supabase
         .from('auctions')
         .select('*')
-        .in('status', ['active', 'ended'])
+        .in('status', ['active', 'ended', 'coming_soon'])
         .order('ends_at', { ascending: true });
       if (error) throw error;
       return data ?? [];

@@ -77,18 +77,29 @@ function AdminAuctions() {
       ends_at: new Date(form.ends_at).toISOString(),
       license_key: form.license_key || null,
       license_url: form.license_url || null,
-      status: 'active' as any,
+      status: 'coming_soon' as any,
       current_price: 0,
     });
     if (error) toast.error(error.message);
     else {
-      toast.success('Lelang dibuat!');
+      toast.success('Lelang dibuat dengan status "Akan Datang"!');
       queryClient.invalidateQueries({ queryKey: ['admin-auctions'] });
       queryClient.invalidateQueries({ queryKey: ['auctions'] });
       setCreateOpen(false);
       setForm({ title: '', description: '', image_url: '', start_price: 1, bid_increment: 1, ends_at: '', license_key: '', license_url: '' });
     }
     setSubmitting(false);
+  };
+
+  const handleStart = async (id: string) => {
+    const { error } = await supabase
+      .from('auctions')
+      .update({ status: 'active' as any, starts_at: new Date().toISOString() })
+      .eq('id', id);
+    if (error) { toast.error(error.message); return; }
+    toast.success('Lelang dimulai!');
+    queryClient.invalidateQueries({ queryKey: ['admin-auctions'] });
+    queryClient.invalidateQueries({ queryKey: ['auctions'] });
   };
 
   return (
@@ -100,14 +111,23 @@ function AdminAuctions() {
       <div className="space-y-3">
         {auctions?.map((a: any) => (
           <Card key={a.id}>
-            <CardContent className="flex items-center justify-between p-4">
-              <div>
-                <p className="font-display font-semibold text-card-foreground">{a.title}</p>
+            <CardContent className="flex items-center justify-between gap-3 p-4">
+              <div className="min-w-0 flex-1">
+                <p className="font-display font-semibold text-card-foreground truncate">{a.title}</p>
                 <p className="text-xs text-muted-foreground">
                   Harga: {a.current_price || a.start_price} Koin · Berakhir: {format(new Date(a.ends_at), 'dd MMM yyyy HH:mm')}
                 </p>
               </div>
-              <Badge variant={a.status === 'active' ? 'default' : 'secondary'}>{a.status}</Badge>
+              <div className="flex items-center gap-2 shrink-0">
+                <Badge variant={a.status === 'active' ? 'default' : a.status === 'coming_soon' ? 'outline' : 'secondary'}>
+                  {a.status === 'coming_soon' ? 'Akan Datang' : a.status}
+                </Badge>
+                {a.status === 'coming_soon' && (
+                  <Button size="sm" onClick={() => handleStart(a.id)} className="gradient-primary text-primary-foreground">
+                    <Clock className="mr-1 h-3 w-3" /> Mulai
+                  </Button>
+                )}
+              </div>
             </CardContent>
           </Card>
         ))}

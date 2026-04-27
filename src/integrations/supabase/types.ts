@@ -280,7 +280,7 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "moderator" | "user"
-      auction_status: "draft" | "active" | "ended" | "completed"
+      auction_status: "draft" | "active" | "ended" | "completed" | "coming_soon"
       topup_status: "pending" | "approved" | "rejected"
       transaction_status: "warranty" | "completed" | "complained" | "refunded"
     }
@@ -411,7 +411,7 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "moderator", "user"],
-      auction_status: ["draft", "active", "ended", "completed"],
+      auction_status: ["draft", "active", "ended", "completed", "coming_soon"],
       topup_status: ["pending", "approved", "rejected"],
       transaction_status: ["warranty", "completed", "complained", "refunded"],
     },

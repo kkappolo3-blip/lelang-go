@@ -27,6 +27,7 @@ export function AuctionCard({ auction }: AuctionCardProps) {
   const { user } = useAuth();
   const navigate = useNavigate();
   const isActive = auction.status === 'active';
+  const isComingSoon = auction.status === 'coming_soon';
   const price = auction.current_price || auction.start_price;
 
   const handleBid = () => {
@@ -49,7 +50,7 @@ export function AuctionCard({ auction }: AuctionCardProps) {
             variant={isActive ? 'default' : 'secondary'}
             className={isActive ? 'absolute right-3 top-3 gradient-primary border-0 text-primary-foreground' : 'absolute right-3 top-3'}
           >
-            {isActive ? 'LIVE' : 'Selesai'}
+            {isActive ? 'LIVE' : isComingSoon ? 'Akan Datang' : 'Selesai'}
           </Badge>
         </div>
 
@@ -71,8 +72,12 @@ export function AuctionCard({ auction }: AuctionCardProps) {
               </div>
             </div>
             <div className="text-right">
-              <p className="text-xs text-muted-foreground">Sisa waktu</p>
-              <CountdownTimer endsAt={auction.ends_at} className="text-sm" />
+              <p className="text-xs text-muted-foreground">{isComingSoon ? 'Status' : 'Sisa waktu'}</p>
+              {isComingSoon ? (
+                <span className="text-sm font-medium text-muted-foreground">Belum dibuka</span>
+              ) : (
+                <CountdownTimer endsAt={auction.ends_at} className="text-sm" />
+              )}
             </div>
           </div>
         </CardContent>
@@ -84,7 +89,7 @@ export function AuctionCard({ auction }: AuctionCardProps) {
             className="w-full gradient-primary text-primary-foreground font-semibold"
           >
             <Gavel className="mr-2 h-4 w-4" />
-            {isActive ? 'Bid Sekarang' : 'Lelang Berakhir'}
+            {isActive ? 'Bid Sekarang' : isComingSoon ? 'Akan Datang' : 'Lelang Berakhir'}
           </Button>
         </CardFooter>
       </Card>
