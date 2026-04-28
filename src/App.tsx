@@ -12,6 +12,7 @@ import TransactionsPage from "./pages/TransactionsPage";
 import AdminPage from "./pages/AdminPage";
 import ChangePasswordPage from "./pages/ChangePasswordPage";
 import FAQPage from "./pages/FAQPage";
+import AuctionDetailPage from "./pages/AuctionDetailPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -32,6 +33,7 @@ const App = () => (
             <Route path="/admin" element={<AdminPage />} />
             <Route path="/ganti-password" element={<ChangePasswordPage />} />
             <Route path="/faq" element={<FAQPage />} />
+            <Route path="/lelang/:id" element={<AuctionDetailPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>
