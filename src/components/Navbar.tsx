@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '@/lib/auth-context';
 import { useWallet } from '@/hooks/useWallet';
-import { Coins, Gavel, Menu, User, LogOut, Shield, LayoutDashboard, KeyRound } from 'lucide-react';
+import { Coins, Gavel, Menu, User, LogOut, Shield, LayoutDashboard, KeyRound, HelpCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -24,6 +24,7 @@ export function Navbar() {
     { href: '/', label: 'Lelang', icon: Gavel },
     ...(user ? [{ href: '/wallet', label: 'Dompet', icon: Coins }] : []),
     ...(user ? [{ href: '/transactions', label: 'Transaksi', icon: LayoutDashboard }] : []),
+    { href: '/faq', label: 'FAQ', icon: HelpCircle },
     ...(isAdmin ? [{ href: '/admin', label: 'Admin', icon: Shield }] : []),
   ];
 
