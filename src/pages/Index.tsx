@@ -6,9 +6,9 @@ export default function Index() {
   const { data: auctions, isLoading } = useAuctions();
 
   return (
-    <div className="space-y-10 pb-16">
+    <main className="space-y-10 pb-16">
       {/* Hero */}
-      <section className="gradient-hero rounded-b-3xl px-4 py-16 text-center">
+      <section aria-label="Hero Lelang-GO" className="gradient-hero rounded-b-3xl px-4 py-16 text-center">
         <div className="container">
           <div className="mx-auto max-w-2xl">
             <h1 className="font-display text-3xl font-bold text-primary-foreground md:text-5xl">
@@ -40,7 +40,7 @@ export default function Index() {
       </section>
 
       {/* Auction List */}
-      <section className="container">
+      <section aria-label="Daftar lelang aktif" className="container">
         <div className="mb-6 flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl gradient-primary">
             <Gavel className="h-5 w-5 text-primary-foreground" />
@@ -71,6 +71,6 @@ export default function Index() {
           </div>
         )}
       </section>
-    </div>
+    </main>
   );
 }
