@@ -15,7 +15,7 @@ export default function Index() {
               Lelang-GO
               <br />
               <span className="bg-gradient-to-r from-teal-300 to-cyan-300 bg-clip-text text-transparent">
-                Marketplace Lelang Digital
+                Marketplace Lelang Software & Lisensi Premium
               </span>
             </h1>
             <p className="mt-4 text-primary-foreground/70">
@@ -41,15 +41,15 @@ export default function Index() {
 
       {/* Auction List */}
       <section aria-label="Daftar lelang aktif" className="container">
-        <div className="mb-6 flex items-center gap-3">
+        <header className="mb-6 flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl gradient-primary">
             <Gavel className="h-5 w-5 text-primary-foreground" />
           </div>
           <div>
-            <h2 className="font-display text-xl font-bold text-foreground">War Room</h2>
-            <p className="text-sm text-muted-foreground">Lelang aktif saat ini</p>
+            <h2 className="font-display text-xl font-bold text-foreground">Lelang Aktif</h2>
+            <p className="text-sm text-muted-foreground">Daftar lelang software & lisensi yang sedang berlangsung</p>
           </div>
-        </div>
+        </header>
 
         {isLoading ? (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
