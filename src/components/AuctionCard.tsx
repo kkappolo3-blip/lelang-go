@@ -4,9 +4,9 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { CountdownTimer } from '@/components/CountdownTimer';
 import { BidModal } from '@/components/BidModal';
-import { Gavel, Users, TrendingUp } from 'lucide-react';
+import { Gavel, Users, TrendingUp, Eye } from 'lucide-react';
 import { useAuth } from '@/lib/auth-context';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 interface AuctionCardProps {
   auction: {
@@ -82,7 +82,7 @@ export function AuctionCard({ auction }: AuctionCardProps) {
           </div>
         </CardContent>
 
-        <CardFooter className="pt-0">
+        <CardFooter className="flex-col gap-2 pt-0">
           <Button
             onClick={handleBid}
             disabled={!isActive}
@@ -90,6 +90,11 @@ export function AuctionCard({ auction }: AuctionCardProps) {
           >
             <Gavel className="mr-2 h-4 w-4" />
             {isActive ? 'Bid Sekarang' : isComingSoon ? 'Akan Datang' : 'Lelang Berakhir'}
+          </Button>
+          <Button asChild variant="outline" size="sm" className="w-full">
+            <Link to={`/lelang/${auction.id}`}>
+              <Eye className="mr-2 h-4 w-4" /> Lihat Detail & Riwayat Bid
+            </Link>
           </Button>
         </CardFooter>
       </Card>
